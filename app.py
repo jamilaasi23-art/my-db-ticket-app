@@ -40,7 +40,7 @@ st.markdown("""
     }
     .name-line {
         margin-top: -45px;   /* Even stronger pull-up for tighter gap */
-        margin-bottom: 4px;
+        margin-bottom: 2px;
         font-size: 22px;
     }
     </style>
@@ -148,6 +148,7 @@ st.markdown(f"""
         </div>
     </div>
 """, unsafe_allow_html=True)
+
 
 
 
