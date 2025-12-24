@@ -7,12 +7,12 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS with stronger overrides for zero gap
+# CSS with stronger negative margins for tighter gap
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
     .stApp {padding-top: 0 !important; margin-top: 0 !important;}
-    .block-container {padding-top: 0 !important; margin-top: 0 !important;}
+    .block-container {padding-top: 0 !important;}
     
     .fixed-top-bar {
         position: fixed;
@@ -26,7 +26,7 @@ st.markdown("""
     }
     
     .main-content {
-        margin-top: 100px;   /* Reduced to compensate for negative pull */
+        margin-top: 90px;    /* Reduced more to compensate */
         background-color: white;
         color: black;
         padding: 0 20px 20px 20px;
@@ -39,7 +39,7 @@ st.markdown("""
         margin: 10px 0 4px 0;
     }
     .name-line {
-        margin-top: -15px;   /* Pulls the name up strongly to touch QR */
+        margin-top: -25px;   /* Stronger pull-up for even tighter gap */
         margin-bottom: 4px;
         font-size: 16px;
     }
@@ -76,13 +76,13 @@ st.markdown(
 # 40px space after top bar
 st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
 
-# QR code as raw HTML with negative margin to overlap any gap
+# QR code as raw HTML with negative bottom margin
 st.markdown(
-    f'<img src="data:image/jpeg;base64,{qr_code_str}" style="width:100%; height:auto; display:block; margin:0; padding:0; margin-bottom: -10px;">',
+    f'<img src="data:image/jpeg;base64,{qr_code_str}" style="width:100%; height:auto; display:block; margin:0; padding:0; margin-bottom: -20px;">',
     unsafe_allow_html=True
 )
 
-# Text content - pulled up to touch QR
+# Text content
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
 st.markdown("<div class='name-line'>Jamil Aasi</div>", unsafe_allow_html=True)
@@ -121,7 +121,7 @@ Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuze
 Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.<br>
 Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.<br>
 Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.<br>
-Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbindung Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
+Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbinding Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
 Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.<br><br>
 Stornierung ausgeschlossen<br>
 Ticketcode: BNAZCDJ0
