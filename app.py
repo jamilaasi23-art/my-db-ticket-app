@@ -29,7 +29,7 @@ st.markdown("""
         margin-top: 80px;    /* Reduced further to compensate strong pull-up */
         background-color: white;
         color: black;
-        padding: 0 20px 20px 20px;
+        padding: 0 5px 5px 5px;
         line-height: 1.1;
         font-size: 20px;     /* Increased text size */
     }
@@ -148,5 +148,6 @@ st.markdown(f"""
         </div>
     </div>
 """, unsafe_allow_html=True)
+
 
 
