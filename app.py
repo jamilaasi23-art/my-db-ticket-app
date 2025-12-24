@@ -7,7 +7,7 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS for fixed top bar + uniform text styling
+# CSS for fixed top bar + precise spacing like original screenshot
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
@@ -26,30 +26,35 @@ st.markdown("""
     }
     
     .main-content {
-        margin-top: 110px;   /* Adjust if top bar height changes */
+        margin-top: 110px;   /* Space for fixed top bar */
         background-color: white;
         color: black;
-        padding: 20px;
-        line-height: 1.4;
-        font-size: 16px;     /* All text same size */
+        padding: 0 20px 20px 20px;  /* No top padding - tight to QR */
+        line-height: 1.35;
+        font-size: 16px;
     }
     .main-content p, .main-content div {
-        margin: 6px 0;
+        margin: 4px 0;       /* Very tight between normal lines */
     }
     .section-header {
         font-weight: bold;
         font-size: 16px;
-        margin: 20px 0 8px 0;
+        margin: 22px 0 10px 0;   /* More space ABOVE bold headers only */
+        padding-top: 8px;
+    }
+    .name-line {
+        margin: 18px 0 8px 0;    /* Space after QR, before name */
+        font-size: 16px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Load images - make sure filenames match exactly
+# Load images
 top_bar = Image.open("top_bar.jpeg")
 qr_code = Image.open("qr_code.jpeg")
 bottom_bg = Image.open("bottom_background.jpeg")
 
-# Convert top_bar to base64 for HTML embed
+# Convert top_bar to base64
 buffered = BytesIO()
 top_bar.save(buffered, format="JPEG")
 img_str = base64.b64encode(buffered.getvalue()).decode()
@@ -59,7 +64,7 @@ now = datetime.now()
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
 future_time = (now + timedelta(hours=2)).strftime("%H:%M")
-day_month_no_dots = now.strftime("%d %m")  # 24 12 format, no dots
+day_month_no_dots = now.strftime("%d %m")  # 24 12
 
 # Fixed top bar
 st.markdown(
@@ -67,13 +72,19 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Space between top bar and QR (natural gap)
+st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+
 # QR code
 st.image(qr_code, use_column_width=True)
 
-# Main content - all text same size, only headers bold
+# Very small space between QR and text
+st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+
+# Main content
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
-st.write("Jamil Aasi")  # Normal size, not bold
+st.markdown("<div class='name-line'>Jamil Aasi</div>", unsafe_allow_html=True)
 
 st.markdown("<p class='section-header'>CIV 1080</p>", unsafe_allow_html=True)
 
@@ -113,7 +124,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 # Bottom background
 st.image(bottom_bg, use_column_width=True)
 
-# Date on bottom: 24 12, no dots, higher and shifted left
+# Date: 24 12, higher and to the left
 st.markdown(f"""
     <div style="position: relative; margin-top: -120px; text-align: left; padding-left: 40px; pointer-events: none;">
         <div style="
