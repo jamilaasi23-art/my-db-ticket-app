@@ -14,9 +14,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load images (use your file names)
-top_bar = Image.open("top_bar.png")
-qr_code = Image.open("qr_code.png")
-bottom_bg = Image.open("bottom_background.png")
+top_bar = Image.open("top_bar.jpeg")
+qr_code = Image.open("qr_code.jpeg")
+bottom_bg = Image.open("bottom_background.jpeg")
 
 # Dynamic dates (updates every open)
 now = datetime.now()
@@ -69,4 +69,5 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Footer
+
 st.markdown("<p style='text-align: center; color: gray; font-size: 14px; margin-top: 60px;'>Stornierung Ausgeschlossen<br>Ticketcode: BNAZcb...</p>", unsafe_allow_html=True)
