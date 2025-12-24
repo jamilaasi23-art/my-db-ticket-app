@@ -48,7 +48,7 @@ st.markdown("""
 
 # Load images
 top_bar = Image.open("top_bar.jpeg")
-qr_code = Image.open("qr_code.jpeg")
+qr_code = Image.open("qr_code3.jpeg")
 bottom_bg = Image.open("bottom_background.jpeg")
 
 # Convert to base64
@@ -148,3 +148,4 @@ st.markdown(f"""
         </div>
     </div>
 """, unsafe_allow_html=True)
+
