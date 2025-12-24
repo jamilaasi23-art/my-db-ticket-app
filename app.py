@@ -7,7 +7,7 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS for fixed top bar + precise spacing like original screenshot
+# CSS for fixed top bar + precise spacing
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
@@ -29,21 +29,21 @@ st.markdown("""
         margin-top: 110px;   /* Space for fixed top bar */
         background-color: white;
         color: black;
-        padding: 0 20px 20px 20px;  /* No top padding - tight to QR */
-        line-height: 1.35;
+        padding: 0 20px 20px 20px;
+        line-height: 1.3;    /* Very tight lines */
         font-size: 16px;
+        font-family: Arial, sans-serif;
     }
     .main-content p, .main-content div {
-        margin: 4px 0;       /* Very tight between normal lines */
+        margin: 3px 0;       /* Minimal space between normal lines */
     }
     .section-header {
         font-weight: bold;
         font-size: 16px;
-        margin: 22px 0 10px 0;   /* More space ABOVE bold headers only */
-        padding-top: 8px;
+        margin: 24px 0 8px 0;   /* Clear space only above bold headers */
     }
     .name-line {
-        margin: 18px 0 8px 0;    /* Space after QR, before name */
+        margin: 16px 0 8px 0;
         font-size: 16px;
     }
     </style>
@@ -72,16 +72,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Space between top bar and QR (natural gap)
-st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+# 40 dp space after top bar
+st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
 
 # QR code
 st.image(qr_code, use_column_width=True)
 
-# Very small space between QR and text
-st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+# 40 dp space after QR code
+st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
 
-# Main content
+# Main text content
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
 st.markdown("<div class='name-line'>Jamil Aasi</div>", unsafe_allow_html=True)
@@ -124,12 +124,13 @@ st.markdown('</div>', unsafe_allow_html=True)
 # Bottom background
 st.image(bottom_bg, use_column_width=True)
 
-# Date: 24 12, higher and to the left
+# Date on bottom: 80 dp higher, 10 dp left, ~10% smaller, different font
 st.markdown(f"""
-    <div style="position: relative; margin-top: -120px; text-align: left; padding-left: 40px; pointer-events: none;">
+    <div style="position: relative; margin-top: -80px; text-align: left; padding-left: 10px; pointer-events: none;">
         <div style="
-            font-size: 48px;
+            font-size: 43px;                 /* ~10% smaller */
             font-weight: 900;
+            font-family: 'Arial Black', 'Arial', sans-serif;  /* Different bold font */
             color: #333333;
             -webkit-text-stroke: 3px #bbbbbb;
             text-stroke: 3px #bbbbbb;
