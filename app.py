@@ -7,7 +7,7 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS for fixed top bar + zero space after QR
+# CSS for fixed top bar + full-width QR + zero space
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
@@ -39,14 +39,16 @@ st.markdown("""
         margin: 10px 0 4px 0;
     }
     .name-line {
-        margin: -8px 0 4px 0;   /* Pulls name up to touch QR code */
+        margin: -5px 0 4px 0;   /* Pulls name up for zero gap */
         font-size: 16px;
     }
-    /* Make QR code 10% bigger */
-    .big-qr img {
-        width: 110% !important;
-        max-width: none !important;
-        margin-left: -5%;
+    /* Force QR code to full width like top bar */
+    .full-width-qr img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        display: block;
+        margin: 0 auto;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -77,14 +79,12 @@ st.markdown(
 # 40px space after top bar
 st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
 
-# QR code - 10% bigger and centered
-st.markdown('<div class="big-qr">', unsafe_allow_html=True)
-st.image(qr_code, use_column_width=True)
+# QR code - now full width like top bar
+st.markdown('<div class="full-width-qr">', unsafe_allow_html=True)
+st.image(qr_code, use_column_width=False)  # Disabled to allow CSS full control
 st.markdown('</div>', unsafe_allow_html=True)
 
-# NO space div at all — text starts immediately
-
-# Main content
+# Zero space - text starts immediately
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
 st.markdown("<div class='name-line'>Jamil Aasi</div>", unsafe_allow_html=True)
@@ -118,7 +118,7 @@ Gesamtpreis: 45,99 €
 
 st.markdown("<p class='section-header'>Konditionen</p>", unsafe_allow_html=True)
 st.markdown("""
-Zugbindung: Gilt nur für eingetragene Züge.<br>
+Zugbinding: Gilt nur für eingetragene Züge.<br>
 Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuzeigen.<br>
 Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.<br>
 Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.<br>
