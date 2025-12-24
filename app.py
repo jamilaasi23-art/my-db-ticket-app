@@ -38,9 +38,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load images
-top_bar = Image.open("top_bar.jpg")          # ← Use your exact top bar filename (.jpg or .jpeg)
-qr_code = Image.open("qr_code.jpg")          # ← Your QR filename
-bottom_bg = Image.open("bottom_background.jpg")  # ← Your bottom filename
+top_bar = Image.open("top_bar.jpeg")          # ← Use your exact top bar filename (.jpg or .jpeg)
+qr_code = Image.open("qr_code.jpeg")          # ← Your QR filename
+bottom_bg = Image.open("bottom_background.jpeg")  # ← Your bottom filename
 
 # Dynamic dates (today is 24.12.2025)
 now = datetime.now()
@@ -109,3 +109,4 @@ st.markdown(f"""
 
 # Footer
 st.markdown("<p style='text-align: center; color: gray; font-size: 14px; margin-top: 40px;'>Stornierung Ausgeschlossen<br>Ticketcode: BNAZcb...</p>", unsafe_allow_html=True)
+
