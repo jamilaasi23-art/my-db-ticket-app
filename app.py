@@ -7,7 +7,7 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS for fixed top bar + ultra-tight spacing
+# CSS for fixed top bar + zero space after QR
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
@@ -39,8 +39,14 @@ st.markdown("""
         margin: 10px 0 4px 0;
     }
     .name-line {
-        margin: 0 0 4px 0;
+        margin: -8px 0 4px 0;   /* Pulls name up to touch QR code */
         font-size: 16px;
+    }
+    /* Make QR code 10% bigger */
+    .big-qr img {
+        width: 110% !important;
+        max-width: none !important;
+        margin-left: -5%;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -71,11 +77,12 @@ st.markdown(
 # 40px space after top bar
 st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
 
-# QR code
+# QR code - 10% bigger and centered
+st.markdown('<div class="big-qr">', unsafe_allow_html=True)
 st.image(qr_code, use_column_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
-# REMOVED: No space at all after QR code — text starts immediately
-# (deleted the 5px div)
+# NO space div at all — text starts immediately
 
 # Main content
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
