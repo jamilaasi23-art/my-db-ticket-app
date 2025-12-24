@@ -2,65 +2,79 @@ import streamlit as st
 from datetime import datetime, timedelta
 from PIL import Image
 
-# Full-screen app mode
+# Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# Custom CSS for sticky top bar, white background, black text, tighter spacing, and bottom date style
+# Strong CSS for TRUE fixed top bar + clean styling
 st.markdown("""
     <style>
-    /* Hide Streamlit elements */
+    /* Hide Streamlit defaults */
     #MainMenu, footer, header {visibility: hidden;}
     
-    /* Sticky top bar */
-    .sticky-top {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        width: 100%;
+    /* Remove padding/margin */
+    .stApp {padding-top: 0 !important; margin-top: 0 !important;}
+    .block-container {padding-top: 0 !important;}
+    
+    /* TRUE fixed top bar - always stays at the very top */
+    .fixed-top-bar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 9999 !important;
+        background-color: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
-    /* White background, black text, tighter line spacing */
+    /* Content starts below the fixed top bar */
     .main-content {
+        margin-top: 110px;   /* Adjust this if your top bar is taller/shorter (try 90px–130px) */
         background-color: white;
         color: black;
         padding: 20px;
-        line-height: 1.4;  /* Reduced from default ~1.6 */
+        line-height: 1.4;    /* Tighter line spacing */
         font-size: 16px;
     }
     .main-content h1 {
         font-size: 28px;
         margin: 10px 0 5px 0;
+        color: black;
     }
     .main-content p, .main-content div {
-        margin: 8px 0;  /* Tighter spacing between lines */
+        margin: 6px 0;       /* Even tighter spacing between lines */
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Load images
-top_bar = Image.open("top_bar.jpeg")          # ← Use your exact top bar filename (.jpg or .jpeg)
-qr_code = Image.open("qr_code.jpeg")          # ← Your QR filename
-bottom_bg = Image.open("bottom_background.jpeg")  # ← Your bottom filename
+# Load your images - make sure filenames match EXACTLY what you uploaded
+top_bar = Image.open("top_bar.jpeg")          # ← change if different (e.g. top_bar.jpg)
+qr_code = Image.open("qr_code.jpeg")          # ← change if different
+bottom_bg = Image.open("bottom_background.jpeg")  # ← change if different
 
-# Dynamic dates (today is 24.12.2025)
+# Dynamic dates (today = December 24, 2025)
 now = datetime.now()
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
 future_time = (now + timedelta(hours=2)).strftime("%H:%M")
 day_month = now.strftime("%d.%m.")
 
-# 1. Sticky top bar
-st.image(top_bar, use_column_width=True, caption=None)
-st.markdown('<div class="sticky-top"></div>', unsafe_allow_html=True)  # Keeps it fixed on scroll
+# === DISPLAY ===
 
-# 2. QR code
+# 1. FIXED TOP BAR (always visible)
+st.markdown(
+    f'<div class="fixed-top-bar"><img src="{top_bar.getbuffer().tobytes()}" style="width:100%; height:auto; display:block;"></div>',
+    unsafe_allow_html=True
+)
+
+# 2. QR code (below the fixed bar)
 st.image(qr_code, use_column_width=True)
 
-# 3. Main content (white bg, black text, tight spacing)
+# 3. Main text content (white bg, black text, tight spacing)
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
 st.markdown("<h1>Jamil Aasi</h1>", unsafe_allow_html=True)
-st.markdown("<p style='font-size: 18px; font-weight: bold; margin-bottom: 20px;'>CIV 1080</p>", unsafe_allow_html=True)  # Black, not red
+st.markdown("<p style='font-size: 18px; font-weight: bold; margin-bottom: 20px; color: black;'>CIV 1080</p>", unsafe_allow_html=True)
 
 st.markdown("**Gültigkeit**")
 st.write("ICE/ Fahrkarte (Einfache Fahrt)")
@@ -83,30 +97,27 @@ st.write("Auftrags-Nr: 225073878296")
 st.write("Gesamtpreis: 45,99 €")
 
 st.markdown("**Kontingente**")
-st.write("Zubringung: Gilt nur für eingetragene Züge. Dieser ist bei der Kontrolle vorzulegen. Nur gültig mit amtlichem Lichtbildausweis...")  # Keep your full text here
+st.write("Zubringung: Gilt nur für eingetragene Züge. Dieser ist bei der Kontrolle vorzulegen. Nur gültig mit amtlichem Lichtbildausweis. Mehrfachfahrt nicht möglich... (add full text if you want)")
 
 st.markdown('</div>', unsafe_allow_html=True)  # End main content
 
-# 4. Bottom background with ONLY the date overlaid (dark gray text + light gray stroke)
+# 4. Bottom background with ONLY the date (dark gray + light gray stroke)
 st.image(bottom_bg, use_column_width=True)
 
 st.markdown(f"""
     <div style="position: relative; margin-top: -100px; text-align: center; pointer-events: none;">
         <div style="
-            font-size: 48px; 
-            font-weight: 900; 
-            color: #333333;          /* Dark gray */
-            -webkit-text-stroke: 2px #aaaaaa;  /* Light gray stroke */
-            text-stroke: 2px #aaaaaa;
-            text-shadow: 2px 2px 4px #cccccc;
+            font-size: 48px;
+            font-weight: 900;
+            color: #333333;                  /* Dark gray */
+            -webkit-text-stroke: 3px #bbbbbb; /* Light gray outline */
+            text-stroke: 3px #bbbbbb;
+            paint-order: stroke fill;
         ">
             {day_month}.
         </div>
     </div>
 """, unsafe_allow_html=True)
 
-# Adjust margin-top above if the date position isn't perfect (-100px works for most — change to -80px or -120px if needed)
-
-# Footer
+# Optional footer
 st.markdown("<p style='text-align: center; color: gray; font-size: 14px; margin-top: 40px;'>Stornierung Ausgeschlossen<br>Ticketcode: BNAZcb...</p>", unsafe_allow_html=True)
-
