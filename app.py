@@ -7,7 +7,7 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS for fixed top bar + precise spacing
+# CSS for fixed top bar + ultra-tight spacing
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
@@ -26,24 +26,23 @@ st.markdown("""
     }
     
     .main-content {
-        margin-top: 110px;   /* Space for fixed top bar */
+        margin-top: 110px;
         background-color: white;
         color: black;
         padding: 0 20px 20px 20px;
-        line-height: 1.3;    /* Very tight lines */
+        line-height: 1.15;   /* Very tight */
         font-size: 16px;
-        font-family: Arial, sans-serif;
     }
     .main-content p, .main-content div {
-        margin: 3px 0;       /* Minimal space between normal lines */
+        margin: 0.5px 0;     /* Effectively ~1px gap between lines */
     }
     .section-header {
         font-weight: bold;
         font-size: 16px;
-        margin: 24px 0 8px 0;   /* Clear space only above bold headers */
+        margin: 10px 0 4px 0;   /* Only 10px space above bold headers */
     }
     .name-line {
-        margin: 16px 0 8px 0;
+        margin: 0 0 4px 0;
         font-size: 16px;
     }
     </style>
@@ -51,7 +50,7 @@ st.markdown("""
 
 # Load images
 top_bar = Image.open("top_bar.jpeg")
-qr_code = Image.open("qr_code2.jpeg")
+qr_code = Image.open("qr_code.jpeg")
 bottom_bg = Image.open("bottom_background.jpeg")
 
 # Convert top_bar to base64
@@ -64,7 +63,7 @@ now = datetime.now()
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
 future_time = (now + timedelta(hours=2)).strftime("%H:%M")
-day_month_no_dots = now.strftime("%d %m")  # 24 12
+day_month_no_dots = now.strftime("%d %m")
 
 # Fixed top bar
 st.markdown(
@@ -72,16 +71,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# 40 dp space after top bar
-st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
+# 40px space after top bar
+st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
 
 # QR code
 st.image(qr_code, use_column_width=True)
 
-# 40 dp space after QR code
-st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
+# 10px space after QR code
+st.markdown("<div style='height: 10px; background-color: white;'></div>", unsafe_allow_html=True)
 
-# Main text content
+# Main content
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
 st.markdown("<div class='name-line'>Jamil Aasi</div>", unsafe_allow_html=True)
@@ -103,7 +102,7 @@ st.write(f"IC 2156, {future_time} Uhr am {today}")
 st.write("Via: <1080>(HERS/BEB)KS*WAR(BRI/ALT*PB*HAM)")
 
 st.markdown("<p class='section-header'>Buchungsdetails</p>", unsafe_allow_html=True)
-st.write("Gebucht am: 19.12.2025 um 19:51 Uhr")
+st.write(f"Gebucht am: {today} um 04:35 Uhr")
 st.write("Auftrags-Nr: 225073878296")
 st.write("Gesamtpreis: 45,99 €")
 
@@ -113,7 +112,7 @@ st.write("Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrol
 st.write("Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.")
 st.write("Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.")
 st.write("Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.")
-st.write("Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbindung Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.")
+st.write("Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbinding Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.")
 st.write("Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.")
 
 st.write("Stornierung ausgeschlossen")
@@ -124,13 +123,13 @@ st.markdown('</div>', unsafe_allow_html=True)
 # Bottom background
 st.image(bottom_bg, use_column_width=True)
 
-# Date on bottom: 80 dp higher, 10 dp left, ~10% smaller, different font
+# Bottom date
 st.markdown(f"""
     <div style="position: relative; margin-top: -80px; text-align: left; padding-left: 10px; pointer-events: none;">
         <div style="
-            font-size: 43px;                 /* ~10% smaller */
+            font-size: 43px;
             font-weight: 900;
-            font-family: 'Arial Black', 'Arial', sans-serif;  /* Different bold font */
+            font-family: 'Arial Black', 'Arial', sans-serif;
             color: #333333;
             -webkit-text-stroke: 3px #bbbbbb;
             text-stroke: 3px #bbbbbb;
@@ -140,5 +139,3 @@ st.markdown(f"""
         </div>
     </div>
 """, unsafe_allow_html=True)
-
-
