@@ -7,12 +7,12 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS
+# CSS with stronger overrides for zero gap
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
     .stApp {padding-top: 0 !important; margin-top: 0 !important;}
-    .block-container {padding-top: 0 !important;}
+    .block-container {padding-top: 0 !important; margin-top: 0 !important;}
     
     .fixed-top-bar {
         position: fixed;
@@ -26,7 +26,7 @@ st.markdown("""
     }
     
     .main-content {
-        margin-top: 110px;
+        margin-top: 100px;   /* Reduced to compensate for negative pull */
         background-color: white;
         color: black;
         padding: 0 20px 20px 20px;
@@ -39,7 +39,8 @@ st.markdown("""
         margin: 10px 0 4px 0;
     }
     .name-line {
-        margin: 0 0 4px 0;
+        margin-top: -15px;   /* Pulls the name up strongly to touch QR */
+        margin-bottom: 4px;
         font-size: 16px;
     }
     </style>
@@ -50,7 +51,7 @@ top_bar = Image.open("top_bar.jpeg")
 qr_code = Image.open("qr_code.jpeg")
 bottom_bg = Image.open("bottom_background.jpeg")
 
-# Convert images to base64
+# Convert to base64
 def image_to_base64(img):
     buffered = BytesIO()
     img.save(buffered, format="JPEG")
@@ -75,13 +76,13 @@ st.markdown(
 # 40px space after top bar
 st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
 
-# QR code as raw HTML — no padding, full width
+# QR code as raw HTML with negative margin to overlap any gap
 st.markdown(
-    f'<img src="data:image/jpeg;base64,{qr_code_str}" style="width:100%; height:auto; display:block; margin:0; padding:0;">',
+    f'<img src="data:image/jpeg;base64,{qr_code_str}" style="width:100%; height:auto; display:block; margin:0; padding:0; margin-bottom: -10px;">',
     unsafe_allow_html=True
 )
 
-# Text starts immediately after QR — no gap
+# Text content - pulled up to touch QR
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
 st.markdown("<div class='name-line'>Jamil Aasi</div>", unsafe_allow_html=True)
