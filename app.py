@@ -30,13 +30,13 @@ st.markdown("""
         background-color: white;
         color: black;
         padding: 0 20px 20px 20px;
-        line-height: 1.1;    /* Extremely tight */
+        line-height: 1.1;
         font-size: 16px;
     }
     .section-header {
         font-weight: bold;
         font-size: 16px;
-        margin: 10px 0 4px 0;   /* 10px above bold headers */
+        margin: 10px 0 4px 0;
     }
     .name-line {
         margin: 0 0 4px 0;
@@ -74,8 +74,8 @@ st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe
 # QR code
 st.image(qr_code, use_column_width=True)
 
-# Only 5px space after QR code
-st.markdown("<div style='height: 5px; background-color: white;'></div>", unsafe_allow_html=True)
+# REMOVED: No space at all after QR code — text starts immediately
+# (deleted the 5px div)
 
 # Main content
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
