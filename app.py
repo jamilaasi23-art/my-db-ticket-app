@@ -5,35 +5,62 @@ from PIL import Image
 # Full-screen app mode
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# Hide Streamlit elements
+# Custom CSS for sticky top bar, white background, black text, tighter spacing, and bottom date style
 st.markdown("""
     <style>
+    /* Hide Streamlit elements */
     #MainMenu, footer, header {visibility: hidden;}
-    .stApp {padding-top: 0px;}
+    
+    /* Sticky top bar */
+    .sticky-top {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        width: 100%;
+    }
+    
+    /* White background, black text, tighter line spacing */
+    .main-content {
+        background-color: white;
+        color: black;
+        padding: 20px;
+        line-height: 1.4;  /* Reduced from default ~1.6 */
+        font-size: 16px;
+    }
+    .main-content h1 {
+        font-size: 28px;
+        margin: 10px 0 5px 0;
+    }
+    .main-content p, .main-content div {
+        margin: 8px 0;  /* Tighter spacing between lines */
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# Load images (use your file names)
-top_bar = Image.open("top_bar.jpeg")
-qr_code = Image.open("qr_code.jpeg")
-bottom_bg = Image.open("bottom_background.jpeg")
+# Load images
+top_bar = Image.open("top_bar.jpg")          # ← Use your exact top bar filename (.jpg or .jpeg)
+qr_code = Image.open("qr_code.jpg")          # ← Your QR filename
+bottom_bg = Image.open("bottom_background.jpg")  # ← Your bottom filename
 
-# Dynamic dates (updates every open)
+# Dynamic dates (today is 24.12.2025)
 now = datetime.now()
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
 future_time = (now + timedelta(hours=2)).strftime("%H:%M")
 day_month = now.strftime("%d.%m.")
 
-# Top bar
-st.image(top_bar, use_column_width=True)
+# 1. Sticky top bar
+st.image(top_bar, use_column_width=True, caption=None)
+st.markdown('<div class="sticky-top"></div>', unsafe_allow_html=True)  # Keeps it fixed on scroll
 
-# QR code
+# 2. QR code
 st.image(qr_code, use_column_width=True)
 
-# Main content
-st.markdown("<h1 style='text-align: left; font-size: 28px; margin: 15px 0 5px;'>Jamil Aasi</h1>", unsafe_allow_html=True)
-st.markdown("<p style='color: #cc1e2c; font-size: 18px; font-weight: bold; margin-bottom: 25px;'>CIV 1080</p>", unsafe_allow_html=True)
+# 3. Main content (white bg, black text, tight spacing)
+st.markdown('<div class="main-content">', unsafe_allow_html=True)
+
+st.markdown("<h1>Jamil Aasi</h1>", unsafe_allow_html=True)
+st.markdown("<p style='font-size: 18px; font-weight: bold; margin-bottom: 20px;'>CIV 1080</p>", unsafe_allow_html=True)  # Black, not red
 
 st.markdown("**Gültigkeit**")
 st.write("ICE/ Fahrkarte (Einfache Fahrt)")
@@ -56,18 +83,29 @@ st.write("Auftrags-Nr: 225073878296")
 st.write("Gesamtpreis: 45,99 €")
 
 st.markdown("**Kontingente**")
-st.write("Zubringung: Gilt nur für eingetragene Züge. Dieser ist bei der Kontrolle vorzulegen. Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzulegen. Bei Fahrkarten mit BahnCard-Rabatt zeugen Sie bitte zustätzlich Ihre gültige BahnCard vor. Für die nationalen und internationalen Verkehrsverbindungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de. Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Beförderungsverträgen können dabei ein oder mehrere Verkehrsmittelnetze sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsmittel umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung für die Beförderungsträger. Die Haftung erfolgt auch nur für den jeweiligen Beförderungsvertrag. Be einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die ausführende Bescheinigung Kleinkindabteil, Rollstuhlplatzplätze und Voranplatzplätze für Personen mit eingeschränkter Mobilität sowie Platz für Reiseroute mit BahnBonus Gold, oder der Platinum Status sind bei Bedarf für diese Personenengruppen freizugeben. Stornierung ausgeschlossen.")  # Full text from screenshot – edit if needed
+st.write("Zubringung: Gilt nur für eingetragene Züge. Dieser ist bei der Kontrolle vorzulegen. Nur gültig mit amtlichem Lichtbildausweis...")  # Keep your full text here
 
-# Bottom background with overlay
+st.markdown('</div>', unsafe_allow_html=True)  # End main content
+
+# 4. Bottom background with ONLY the date overlaid (dark gray text + light gray stroke)
 st.image(bottom_bg, use_column_width=True)
+
 st.markdown(f"""
-    <div style="position: relative; margin-top: -180px; text-align: center; pointer-events: none; color: #000;">
-        <div style="font-size: 62px; font-weight: 900; letter-spacing: 10px;">225073878296</div>
-        <div style="font-size: 28px; font-weight: bold; margin: 15px 0;">Jamil Aasi</div>
-        <div style="font-size: 44px; font-weight: 900;">{day_month}.</div>
+    <div style="position: relative; margin-top: -100px; text-align: center; pointer-events: none;">
+        <div style="
+            font-size: 48px; 
+            font-weight: 900; 
+            color: #333333;          /* Dark gray */
+            -webkit-text-stroke: 2px #aaaaaa;  /* Light gray stroke */
+            text-stroke: 2px #aaaaaa;
+            text-shadow: 2px 2px 4px #cccccc;
+        ">
+            {day_month}.
+        </div>
     </div>
 """, unsafe_allow_html=True)
 
-# Footer
+# Adjust margin-top above if the date position isn't perfect (-100px works for most — change to -80px or -120px if needed)
 
-st.markdown("<p style='text-align: center; color: gray; font-size: 14px; margin-top: 60px;'>Stornierung Ausgeschlossen<br>Ticketcode: BNAZcb...</p>", unsafe_allow_html=True)
+# Footer
+st.markdown("<p style='text-align: center; color: gray; font-size: 14px; margin-top: 40px;'>Stornierung Ausgeschlossen<br>Ticketcode: BNAZcb...</p>", unsafe_allow_html=True)
