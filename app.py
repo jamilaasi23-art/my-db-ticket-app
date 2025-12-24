@@ -30,16 +30,13 @@ st.markdown("""
         background-color: white;
         color: black;
         padding: 0 20px 20px 20px;
-        line-height: 1.15;   /* Very tight */
+        line-height: 1.1;    /* Extremely tight */
         font-size: 16px;
-    }
-    .main-content p, .main-content div {
-        margin: 0.5px 0;     /* Effectively ~1px gap between lines */
     }
     .section-header {
         font-weight: bold;
         font-size: 16px;
-        margin: 10px 0 4px 0;   /* Only 10px space above bold headers */
+        margin: 10px 0 4px 0;   /* 10px above bold headers */
     }
     .name-line {
         margin: 0 0 4px 0;
@@ -77,8 +74,8 @@ st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe
 # QR code
 st.image(qr_code, use_column_width=True)
 
-# 10px space after QR code
-st.markdown("<div style='height: 10px; background-color: white;'></div>", unsafe_allow_html=True)
+# Only 5px space after QR code
+st.markdown("<div style='height: 5px; background-color: white;'></div>", unsafe_allow_html=True)
 
 # Main content
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
@@ -88,35 +85,42 @@ st.markdown("<div class='name-line'>Jamil Aasi</div>", unsafe_allow_html=True)
 st.markdown("<p class='section-header'>CIV 1080</p>", unsafe_allow_html=True)
 
 st.markdown("<p class='section-header'>Gültigkeit</p>", unsafe_allow_html=True)
-st.write("IC/EC Fahrkarte (Einfache Fahrt)")
-st.write("Super Sparpreis")
-st.write("2. Klasse")
-st.write("1 Person (27-64 Jahre)")
-st.write(f"Von: {today}, 00:00 Uhr")
-st.write(f"Bis: {tomorrow}, 10:00 Uhr")
+st.markdown(f"""
+IC/EC Fahrkarte (Einfache Fahrt)<br>
+Super Sparpreis<br>
+2. Klasse<br>
+1 Person (27-64 Jahre)<br>
+Von: {today}, 00:00 Uhr<br>
+Bis: {tomorrow}, 10:00 Uhr
+""", unsafe_allow_html=True)
 
 st.markdown("<p class='section-header'>Verbindung</p>", unsafe_allow_html=True)
-st.write("Eisenach Hbf - Dortmund Hbf")
-st.write("Zugbindung:")
-st.write(f"IC 2156, {future_time} Uhr am {today}")
-st.write("Via: <1080>(HERS/BEB)KS*WAR(BRI/ALT*PB*HAM)")
+st.markdown(f"""
+Eisenach Hbf - Dortmund Hbf<br>
+Zugbindung:<br>
+IC 2156, {future_time} Uhr am {today}<br>
+Via: <1080>(HERS/BEB)KS*WAR(BRI/ALT*PB*HAM)
+""", unsafe_allow_html=True)
 
 st.markdown("<p class='section-header'>Buchungsdetails</p>", unsafe_allow_html=True)
-st.write(f"Gebucht am: {today} um 04:35 Uhr")
-st.write("Auftrags-Nr: 225073878296")
-st.write("Gesamtpreis: 45,99 €")
+st.markdown(f"""
+Gebucht am: {today} um 04:35 Uhr<br>
+Auftrags-Nr: 225073878296<br>
+Gesamtpreis: 45,99 €
+""", unsafe_allow_html=True)
 
 st.markdown("<p class='section-header'>Konditionen</p>", unsafe_allow_html=True)
-st.write("Zugbindung: Gilt nur für eingetragene Züge.")
-st.write("Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuzeigen.")
-st.write("Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.")
-st.write("Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.")
-st.write("Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.")
-st.write("Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbinding Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.")
-st.write("Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.")
-
-st.write("Stornierung ausgeschlossen")
-st.write("Ticketcode: BNAZCDJ0")
+st.markdown("""
+Zugbindung: Gilt nur für eingetragene Züge.<br>
+Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuzeigen.<br>
+Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.<br>
+Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.<br>
+Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.<br>
+Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbindung Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
+Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.<br><br>
+Stornierung ausgeschlossen<br>
+Ticketcode: BNAZCDJ0
+""", unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
