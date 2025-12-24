@@ -7,7 +7,7 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS to force QR full width and zero gap to text
+# CSS
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
@@ -39,21 +39,8 @@ st.markdown("""
         margin: 10px 0 4px 0;
     }
     .name-line {
-        margin: -10px 0 4px 0;   /* Pulls name up to eliminate any gap */
+        margin: 0 0 4px 0;
         font-size: 16px;
-    }
-    /* Force QR code to full screen width, no padding/margin */
-    .stImage {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    .stImage > img {
-        width: 100vw !important;
-        max-width: 100vw !important;
-        height: auto !important;
-        display: block;
-        margin: 0 !important;
-        padding: 0 !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -63,10 +50,14 @@ top_bar = Image.open("top_bar.jpeg")
 qr_code = Image.open("qr_code.jpeg")
 bottom_bg = Image.open("bottom_background.jpeg")
 
-# Convert top_bar to base64
-buffered = BytesIO()
-top_bar.save(buffered, format="JPEG")
-img_str = base64.b64encode(buffered.getvalue()).decode()
+# Convert images to base64
+def image_to_base64(img):
+    buffered = BytesIO()
+    img.save(buffered, format="JPEG")
+    return base64.b64encode(buffered.getvalue()).decode()
+
+top_bar_str = image_to_base64(top_bar)
+qr_code_str = image_to_base64(qr_code)
 
 # Dynamic dates
 now = datetime.now()
@@ -77,17 +68,20 @@ day_month_no_dots = now.strftime("%d %m")
 
 # Fixed top bar
 st.markdown(
-    f'<div class="fixed-top-bar"><img src="data:image/jpeg;base64,{img_str}" style="width:100%; height:auto; display:block;"></div>',
+    f'<div class="fixed-top-bar"><img src="data:image/jpeg;base64,{top_bar_str}" style="width:100%; height:auto; display:block;"></div>',
     unsafe_allow_html=True
 )
 
 # 40px space after top bar
 st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
 
-# QR code - forced full width, no padding
-st.image(qr_code, use_column_width=False)
+# QR code as raw HTML — no padding, full width
+st.markdown(
+    f'<img src="data:image/jpeg;base64,{qr_code_str}" style="width:100%; height:auto; display:block; margin:0; padding:0;">',
+    unsafe_allow_html=True
+)
 
-# Absolutely no space - text starts right after QR
+# Text starts immediately after QR — no gap
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
 st.markdown("<div class='name-line'>Jamil Aasi</div>", unsafe_allow_html=True)
