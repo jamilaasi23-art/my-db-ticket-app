@@ -31,17 +31,17 @@ st.markdown("""
         color: black;
         padding: 0 5px 5px 5px;
         line-height: 1.1;
-        font-size: 20px;     /* Increased text size */
+        font-size: 22px;     /* Increased text size */
     }
     .section-header {
         font-weight: bold;
-        font-size: 20px;
+        font-size: 22px;
         margin: 10px 0 4px 0;
     }
     .name-line {
         margin-top: -45px;   /* Even stronger pull-up for tighter gap */
         margin-bottom: 4px;
-        font-size: 20px;
+        font-size: 22px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -148,6 +148,7 @@ st.markdown(f"""
         </div>
     </div>
 """, unsafe_allow_html=True)
+
 
 
 
