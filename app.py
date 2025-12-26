@@ -7,9 +7,9 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# Load OCR-B font from CDN (free and reliable)
+# Load reliable OCR-B font from CDN
 st.markdown("""
-    <link href="https://cdn.jsdelivr.net/gh/raisty/OCR-B/dist/ocrb.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/jaycee723/ocr-b@master/ocrb.css" rel="stylesheet">
 """, unsafe_allow_html=True)
 
 # CSS with stronger pull-up and bigger text
@@ -125,7 +125,7 @@ st.markdown("""
 Zugbindung: Gilt nur für eingetragene Züge.<br>
 Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuzeigen.<br>
 Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.<br>
-Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünde und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.<br>
+Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.<br>
 Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.<br>
 Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbindung Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
 Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.<br><br>
@@ -141,13 +141,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Bottom date — OCR-B font
+# Bottom date — OCR-B font from reliable CDN
 st.markdown(f"""
     <div style="position: relative; margin-top: -280px; text-align: left; padding-left: 20px; pointer-events: none;">
         <div style="
             font-size: 34px;
             font-weight: 900;
-            font-family: 'OCR-B', monospace;  /* OCR-B font loaded from CDN */
+            font-family: 'OCR B', monospace;
             color: #444444;
             -webkit-text-stroke: 3px #bbbbbb;
             text-stroke: 3px #bbbbbb;
