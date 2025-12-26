@@ -13,7 +13,7 @@ st.markdown("""
     #MainMenu, footer, header {visibility: hidden;}
     .stApp {padding-top: 0 !important; margin-top: 0 !important;}
     .block-container {padding-top: 0 !important;}
-    
+   
     .fixed-top-bar {
         position: fixed;
         top: 0;
@@ -24,14 +24,14 @@ st.markdown("""
         background-color: white;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    
+   
     .main-content {
-        margin-top: 80px;    /* Reduced further to compensate strong pull-up */
+        margin-top: 80px; /* Reduced further to compensate strong pull-up */
         background-color: white;
         color: black;
         padding: 0 5px 5px 5px;
         line-height: 1.1;
-        font-size: 22px;     /* Increased text size */
+        font-size: 22px; /* Increased text size */
     }
     .section-header {
         font-weight: bold;
@@ -39,9 +39,16 @@ st.markdown("""
         margin: 10px 0 4px 0;
     }
     .name-line {
-        margin-top: -45px;   /* Even stronger pull-up for tighter gap */
+        margin-top: -45px; /* Even stronger pull-up for tighter gap */
         margin-bottom: -2px;
         font-size: 22px;
+    }
+    /* Full-width bottom background - no margins, edge to edge */
+    .full-width-bottom img {
+        width: 100vw !important;
+        max-width: none !important;
+        margin-left: calc(-50vw + 50%) !important;
+        display: block;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -129,8 +136,10 @@ Ticketcode: BNAZCDJ0
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Bottom background
-st.image(bottom_bg, use_column_width=True)
+# Bottom background - full screen width, no margins, edge to edge
+st.markdown('<div class="full-width-bottom">', unsafe_allow_html=True)
+st.image(bottom_bg, use_column_width=False)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Bottom date
 st.markdown(f"""
@@ -148,10 +157,3 @@ st.markdown(f"""
         </div>
     </div>
 """, unsafe_allow_html=True)
-
-
-
-
-
-
-
