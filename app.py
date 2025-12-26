@@ -136,11 +136,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Bottom date — 15px right, 5px down, one normal space between day and month
+# Bottom date — 34px size, 10px right, 5px down from previous
 st.markdown(f"""
-    <div style="position: relative; margin-top: -280px; text-align: left; padding-left: 20px; pointer-events: none;">
+    <div style="position: relative; margin-top: -275px; text-align: left; padding-left: 30px; pointer-events: none;">
         <div style="
-            font-size: 28px;
+            font-size: 34px;
             font-weight: 900;
             font-family: 'Impact', 'Arial Black', sans-serif;
             color: #444444;
