@@ -7,31 +7,31 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS
+# CSS with stronger pull-up and bigger text
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
     .stApp {padding-top: 0 !important; margin-top: 0 !important;}
-    .block-container {padding-top: 0 !important;}
+    .block-container {padding-top: 0 !important; max-width: none !important; width: 100vw !important;}
    
     .fixed-top-bar {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        width: 100%;
+        width: 100vw;
         z-index: 9999;
         background-color: white;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
    
     .main-content {
-        margin-top: 80px;
+        margin-top: 80px; /* Reduced further to compensate strong pull-up */
         background-color: white;
         color: black;
         padding: 0 5px 5px 5px;
         line-height: 1.1;
-        font-size: 22px;
+        font-size: 22px; /* Increased text size */
     }
     .section-header {
         font-weight: bold;
@@ -39,7 +39,7 @@ st.markdown("""
         margin: 10px 0 4px 0;
     }
     .name-line {
-        margin-top: -45px;
+        margin-top: -45px; /* Even stronger pull-up for tighter gap */
         margin-bottom: -2px;
         font-size: 22px;
     }
@@ -59,7 +59,7 @@ def image_to_base64(img):
 
 top_bar_str = image_to_base64(top_bar)
 qr_code_str = image_to_base64(qr_code)
-bottom_bg_str = image_to_base64(bottom_bg)  # New: convert bottom_bg too
+bottom_bg_str = image_to_base64(bottom_bg)
 
 # Dynamic dates
 now = datetime.now()
@@ -70,7 +70,7 @@ day_month_no_dots = now.strftime("%d %m")
 
 # Fixed top bar
 st.markdown(
-    f'<div class="fixed-top-bar"><img src="data:image/jpeg;base64,{top_bar_str}" style="width:100%; height:auto; display:block;"></div>',
+    f'<div class="fixed-top-bar"><img src="data:image/jpeg;base64,{top_bar_str}" style="width:100vw; height:auto; display:block; margin:0; padding:0;"></div>',
     unsafe_allow_html=True
 )
 
@@ -130,9 +130,9 @@ Ticketcode: BNAZCDJ0
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Bottom background as raw HTML — full width, edge to edge, no margins
+# Bottom background as raw HTML — full width
 st.markdown(
-    f'<img src="data:image/jpeg;base64,{bottom_bg_str}" style="width:100%; height:auto; display:block; margin:0; padding:0;">',
+    f'<img src="data:image/jpeg;base64,{bottom_bg_str}" style="width:100vw; height:auto; display:block; margin:0; padding:0;">',
     unsafe_allow_html=True
 )
 
