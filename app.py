@@ -136,14 +136,14 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Bottom date — moved 200px up, Impact font
+# Bottom date — smaller size (24px), less black color
 st.markdown(f"""
     <div style="position: relative; margin-top: -280px; text-align: left; padding-left: 10px; pointer-events: none;">
         <div style="
-            font-size: 33px;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: 900;
             font-family: 'Impact', 'Arial Black', sans-serif;
-            color: #333333;
+            color: #444444;  /* A little less black (dark gray) */
             -webkit-text-stroke: 3px #bbbbbb;
             text-stroke: 3px #bbbbbb;
             paint-order: stroke fill;
@@ -152,5 +152,3 @@ st.markdown(f"""
         </div>
     </div>
 """, unsafe_allow_html=True)
-
-
