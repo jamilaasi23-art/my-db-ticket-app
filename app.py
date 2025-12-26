@@ -7,7 +7,7 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
-# CSS with stronger pull-up and bigger text
+# CSS
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
@@ -26,12 +26,12 @@ st.markdown("""
     }
    
     .main-content {
-        margin-top: 80px; /* Reduced further to compensate strong pull-up */
+        margin-top: 80px;
         background-color: white;
         color: black;
         padding: 0 5px 5px 5px;
         line-height: 1.1;
-        font-size: 22px; /* Increased text size */
+        font-size: 22px;
     }
     .section-header {
         font-weight: bold;
@@ -39,16 +39,9 @@ st.markdown("""
         margin: 10px 0 4px 0;
     }
     .name-line {
-        margin-top: -45px; /* Even stronger pull-up for tighter gap */
+        margin-top: -45px;
         margin-bottom: -2px;
         font-size: 22px;
-    }
-    /* Full-width bottom background - no margins, edge to edge */
-    .full-width-bottom img {
-        width: 100vw !important;
-        max-width: none !important;
-        margin-left: calc(-50vw + 50%) !important;
-        display: block;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -66,6 +59,7 @@ def image_to_base64(img):
 
 top_bar_str = image_to_base64(top_bar)
 qr_code_str = image_to_base64(qr_code)
+bottom_bg_str = image_to_base64(bottom_bg)  # New: convert bottom_bg too
 
 # Dynamic dates
 now = datetime.now()
@@ -83,7 +77,7 @@ st.markdown(
 # 40px space after top bar
 st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
 
-# QR code as raw HTML with stronger negative bottom margin
+# QR code as raw HTML
 st.markdown(
     f'<img src="data:image/jpeg;base64,{qr_code_str}" style="width:100%; height:auto; display:block; margin:0; padding:0; margin-bottom: -30px;">',
     unsafe_allow_html=True
@@ -136,10 +130,11 @@ Ticketcode: BNAZCDJ0
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Bottom background - full screen width, no margins, edge to edge
-st.markdown('<div class="full-width-bottom">', unsafe_allow_html=True)
-st.image(bottom_bg, use_column_width=False)
-st.markdown('</div>', unsafe_allow_html=True)
+# Bottom background as raw HTML — full width, edge to edge, no margins
+st.markdown(
+    f'<img src="data:image/jpeg;base64,{bottom_bg_str}" style="width:100%; height:auto; display:block; margin:0; padding:0;">',
+    unsafe_allow_html=True
+)
 
 # Bottom date
 st.markdown(f"""
