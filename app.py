@@ -137,9 +137,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Bottom date — 28px, 4px space between numbers, 20px right, 10px down
+# Bottom date — 20px space between day and month, 5px up and 5px left
 st.markdown(f"""
-    <div style="position: relative; margin-top: -270px; text-align: left; padding-left: 30px; pointer-events: none;">
+    <div style="position: relative; margin-top: -285px; text-align: left; padding-left: 5px; pointer-events: none;">
         <div style="
             font-size: 28px;
             font-weight: 900;
@@ -148,9 +148,9 @@ st.markdown(f"""
             -webkit-text-stroke: 3px #bbbbbb;
             text-stroke: 3px #bbbbbb;
             paint-order: stroke fill;
-            letter-spacing: 4px;  /* 4px space between day and month */
+            letter-spacing: 20px;  /* 20px space between day and month */
         ">
-            {day} {month}
+            {day}{month}
         </div>
     </div>
 """, unsafe_allow_html=True)
