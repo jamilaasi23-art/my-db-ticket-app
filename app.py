@@ -66,7 +66,8 @@ now = datetime.now()
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
 future_time = (now + timedelta(hours=2)).strftime("%H:%M")
-day_month_no_dots = now.strftime("%d %m")
+day = now.strftime("%d")
+month = now.strftime("%m")
 
 # Fixed top bar
 st.markdown(
@@ -136,19 +137,20 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Bottom date — smaller size (24px), less black color
+# Bottom date — 28px, 4px space between numbers, 20px right, 10px down
 st.markdown(f"""
-    <div style="position: relative; margin-top: -280px; text-align: left; padding-left: 10px; pointer-events: none;">
+    <div style="position: relative; margin-top: -270px; text-align: left; padding-left: 30px; pointer-events: none;">
         <div style="
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 900;
             font-family: 'Impact', 'Arial Black', sans-serif;
-            color: #444444;  /* A little less black (dark gray) */
+            color: #444444;
             -webkit-text-stroke: 3px #bbbbbb;
             text-stroke: 3px #bbbbbb;
             paint-order: stroke fill;
+            letter-spacing: 4px;  /* 4px space between day and month */
         ">
-            {day_month_no_dots}
+            {day} {month}
         </div>
     </div>
 """, unsafe_allow_html=True)
