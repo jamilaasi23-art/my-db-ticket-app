@@ -66,8 +66,7 @@ now = datetime.now()
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
 future_time = (now + timedelta(hours=2)).strftime("%H:%M")
-day = now.strftime("%d")
-month = now.strftime("%m")
+day_month_no_dots = now.strftime("%d %m")  # Back to original: natural spacing like "26 12"
 
 # Fixed top bar
 st.markdown(
@@ -123,7 +122,7 @@ Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuze
 Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.<br>
 Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.<br>
 Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.<br>
-Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbinding Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
+Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbindung Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
 Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.<br><br>
 Stornierung ausgeschlossen<br>
 Ticketcode: BNAZCDJ0
@@ -137,7 +136,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Bottom date — original spacing (4px between day and month)
+# Bottom date — back to original natural spacing (no letter-spacing)
 st.markdown(f"""
     <div style="position: relative; margin-top: -285px; text-align: left; padding-left: 5px; pointer-events: none;">
         <div style="
@@ -148,9 +147,8 @@ st.markdown(f"""
             -webkit-text-stroke: 3px #bbbbbb;
             text-stroke: 3px #bbbbbb;
             paint-order: stroke fill;
-            letter-spacing: 4px;  /* Original spacing between day and month */
         ">
-            {day}{month}
+            {day_month_no_dots}
         </div>
     </div>
 """, unsafe_allow_html=True)
