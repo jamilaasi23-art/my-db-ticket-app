@@ -12,14 +12,14 @@ st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
     .stApp {padding-top: 0 !important; margin-top: 0 !important;}
-    .block-container {padding-top: 0 !important; max-width: none !important; width: 100vw !important;}
+    .block-container {padding-top: 0 !important;}
    
     .fixed-top-bar {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        width: 100vw;
+        width: 100%;
         z-index: 9999;
         background-color: white;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -70,7 +70,7 @@ day_month_no_dots = now.strftime("%d %m")
 
 # Fixed top bar
 st.markdown(
-    f'<div class="fixed-top-bar"><img src="data:image/jpeg;base64,{top_bar_str}" style="width:100vw; height:auto; display:block; margin:0; padding:0;"></div>',
+    f'<div class="fixed-top-bar"><img src="data:image/jpeg;base64,{top_bar_str}" style="width:100%; height:auto; display:block;"></div>',
     unsafe_allow_html=True
 )
 
@@ -136,13 +136,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Bottom date
+# Bottom date — moved 200px up, Impact font
 st.markdown(f"""
-    <div style="position: relative; margin-top: -80px; text-align: left; padding-left: 10px; pointer-events: none;">
+    <div style="position: relative; margin-top: -280px; text-align: left; padding-left: 10px; pointer-events: none;">
         <div style="
             font-size: 43px;
             font-weight: 900;
-            font-family: 'Arial Black', 'Arial', sans-serif;
+            font-family: 'Impact', 'Arial Black', sans-serif;
             color: #333333;
             -webkit-text-stroke: 3px #bbbbbb;
             text-stroke: 3px #bbbbbb;
