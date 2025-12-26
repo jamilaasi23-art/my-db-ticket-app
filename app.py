@@ -6,7 +6,37 @@ from io import BytesIO
 
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
+# Make it a Progressive Web App (PWA) for full-screen on mobile
+st.set_page_config(
+    page_title="Mein Ticket",
+    page_icon="🎫",
+    layout="centered",
+    initial_sidebar_state="collapsed",
+    menu_items=None
+)
 
+# PWA manifest and meta tags for full-screen experience
+st.markdown("""
+    <link rel="manifest" href="data:application/manifest+json,{
+        "name": "Mein Ticket",
+        "short_name": "Ticket",
+        "start_url": ".",
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#cc1e2c",
+        "icons": [
+            {
+                "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
+                "sizes": "192x192",
+                "type": "image/png"
+            }
+        ]
+    }">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#cc1e2c">
+""", unsafe_allow_html=True)
 # CSS with stronger pull-up and bigger text
 st.markdown("""
     <style>
@@ -152,3 +182,4 @@ st.markdown(f"""
         </div>
     </div>
 """, unsafe_allow_html=True)
+
