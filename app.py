@@ -122,7 +122,7 @@ Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuze
 Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.<br>
 Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.<br>
 Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.<br>
-Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbindung Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
+Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbinding Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
 Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.<br><br>
 Stornierung ausgeschlossen<br>
 Ticketcode: BNAZCDJ0
@@ -136,9 +136,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Bottom date — 34px size, 10px right, 5px down from previous
+# Bottom date — moved 5px left and 5px up from previous
 st.markdown(f"""
-    <div style="position: relative; margin-top: -275px; text-align: left; padding-left: 30px; pointer-events: none;">
+    <div style="position: relative; margin-top: -280px; text-align: left; padding-left: 20px; pointer-events: none;">
         <div style="
             font-size: 34px;
             font-weight: 900;
