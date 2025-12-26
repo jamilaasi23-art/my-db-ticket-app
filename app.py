@@ -66,7 +66,7 @@ now = datetime.now()
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
 future_time = (now + timedelta(hours=2)).strftime("%H:%M")
-day_month_no_dots = now.strftime("%d %m")  # Back to original: natural spacing like "26 12"
+day_month_with_space = now.strftime("%d %m")  # "26 12" with one normal space
 
 # Fixed top bar
 st.markdown(
@@ -136,9 +136,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Bottom date — back to original natural spacing (no letter-spacing)
+# Bottom date — 15px right, 5px down, one normal space between day and month
 st.markdown(f"""
-    <div style="position: relative; margin-top: -285px; text-align: left; padding-left: 5px; pointer-events: none;">
+    <div style="position: relative; margin-top: -280px; text-align: left; padding-left: 20px; pointer-events: none;">
         <div style="
             font-size: 28px;
             font-weight: 900;
@@ -148,7 +148,7 @@ st.markdown(f"""
             text-stroke: 3px #bbbbbb;
             paint-order: stroke fill;
         ">
-            {day_month_no_dots}
+            {day_month_with_space}
         </div>
     </div>
 """, unsafe_allow_html=True)
