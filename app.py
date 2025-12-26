@@ -141,7 +141,7 @@ st.markdown(f"""
     <div style="position: relative; margin-top: -280px; text-align: left; padding-left: 10px; pointer-events: none;">
         <div style="
             font-size: 33px;
-            font-weight: 900;
+            font-weight: 700;
             font-family: 'Impact', 'Arial Black', sans-serif;
             color: #333333;
             -webkit-text-stroke: 3px #bbbbbb;
@@ -152,4 +152,5 @@ st.markdown(f"""
         </div>
     </div>
 """, unsafe_allow_html=True)
+
 
