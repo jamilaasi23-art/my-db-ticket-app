@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from PIL import Image
 import base64
 from io import BytesIO
@@ -31,12 +32,12 @@ st.markdown("""
     }
    
     .main-content {
-        margin-top: 80px; /* Reduced further to compensate strong pull-up */
+        margin-top: 80px;
         background-color: white;
         color: black;
         padding: 0 5px 5px 5px;
         line-height: 1.1;
-        font-size: 22px; /* Increased text size */
+        font-size: 22px;
     }
     .section-header {
         font-weight: bold;
@@ -44,7 +45,7 @@ st.markdown("""
         margin: 10px 0 4px 0;
     }
     .name-line {
-        margin-top: -45px; /* Even stronger pull-up for tighter gap */
+        margin-top: -45px;
         margin-bottom: -2px;
         font-size: 22px;
     }
@@ -66,12 +67,13 @@ top_bar_str = image_to_base64(top_bar)
 qr_code_str = image_to_base64(qr_code)
 bottom_bg_str = image_to_base64(bottom_bg)
 
-# Dynamic dates
-now = datetime.now()
+# Dynamic dates with Berlin timezone (DST-safe)
+berlin_tz = ZoneInfo("Europe/Berlin")
+now = datetime.now(berlin_tz)
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
-future_time = (now + timedelta(minutes=30)).strftime("%H:%M")
-day_month_with_space = now.strftime("%d %m")  # "26 12" with one normal space
+future_time = (now + timedelta(minutes=45)).strftime("%H:%M")
+day_month_with_space = now.strftime("%d %m")
 
 # Fixed top bar
 st.markdown(
@@ -107,7 +109,7 @@ Bis: {tomorrow}, 10:00 Uhr
 
 st.markdown("<p class='section-header'>Verbindung</p>", unsafe_allow_html=True)
 st.markdown(f"""
-Eisenach Hbf - Jena Hbf<br>
+Eisenach Hbf - Dortmund Hbf<br>
 Zugbindung:<br>
 IC 2156, {future_time} Uhr am {today}<br>
 Via: <1080>(HERS/BEB)KS*WAR(BRI/ALT*PB*HAM)
