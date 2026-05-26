@@ -70,7 +70,7 @@ bottom_bg_str = image_to_base64(bottom_bg)
 now = datetime.now()
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
-future_time = (now + timedelta(hours=2)).strftime("%H:%M")
+future_time = (now + timedelta(minutes=30)).strftime("%H:%M")
 day_month_with_space = now.strftime("%d %m")  # "26 12" with one normal space
 
 # Fixed top bar
@@ -107,7 +107,7 @@ Bis: {tomorrow}, 10:00 Uhr
 
 st.markdown("<p class='section-header'>Verbindung</p>", unsafe_allow_html=True)
 st.markdown(f"""
-Eisenach Hbf - Dortmund Hbf<br>
+Eisenach Hbf - Jena Hbf<br>
 Zugbindung:<br>
 IC 2156, {future_time} Uhr am {today}<br>
 Via: <1080>(HERS/BEB)KS*WAR(BRI/ALT*PB*HAM)
@@ -125,7 +125,7 @@ st.markdown("""
 Zugbindung: Gilt nur für eingetragene Züge.<br>
 Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuzeigen.<br>
 Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.<br>
-Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.<br>
+Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter [www.bahn.de/agb](https://www.bahn.de/agb) und [www.diebefoerderer.de](https://www.diebefoerderer.de).<br>
 Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.<br>
 Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbindung Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
 Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.<br><br>
