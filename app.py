@@ -8,6 +8,16 @@ from io import BytesIO
 # Page config
 st.set_page_config(page_title="Mein Ticket", layout="centered")
 
+# Choose ticket mode
+ticket_option = st.radio(
+    "Choose option",
+    (
+        "Option 1",
+        "Option 2"
+    ),
+    index=0
+)
+
 # Load reliable OCR-B font from CDN
 st.markdown("""
     <link href="https://cdn.jsdelivr.net/gh/jaycee723/ocr-b@master/ocrb.css" rel="stylesheet">
@@ -72,8 +82,15 @@ berlin_tz = ZoneInfo("Europe/Berlin")
 now = datetime.now(berlin_tz)
 today = now.strftime("%d.%m.%Y")
 tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
-future_time = (now + timedelta(minutes=45)).strftime("%H:%M")
 day_month_with_space = now.strftime("%d %m")
+
+# Option-based route and time
+if ticket_option == "Option 1":
+    route_text = "Eisenach Hbf - Dortmund Hbf"
+    future_time = (now + timedelta(minutes=45)).strftime("%H:%M")
+else:
+    route_text = "Dortmund Hbf - Eisenach Hbf"
+    future_time = (now - timedelta(minutes=15)).strftime("%H:%M")
 
 # Fixed top bar
 st.markdown(
@@ -109,7 +126,7 @@ Bis: {tomorrow}, 10:00 Uhr
 
 st.markdown("<p class='section-header'>Verbindung</p>", unsafe_allow_html=True)
 st.markdown(f"""
-Eisenach Hbf - Dortmund Hbf<br>
+{route_text}<br>
 Zugbindung:<br>
 IC 2156, {future_time} Uhr am {today}<br>
 Via: <1080>(HERS/BEB)KS*WAR(BRI/ALT*PB*HAM)
