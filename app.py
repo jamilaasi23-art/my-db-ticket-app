@@ -5,95 +5,132 @@ from PIL import Image
 import base64
 from io import BytesIO
 
+# -----------------------------
+# Page setup
+# -----------------------------
 st.set_page_config(page_title="Trip details", layout="centered")
 
+# -----------------------------
+# Helpers
+# -----------------------------
 def image_to_base64(img, fmt="JPEG"):
     buffered = BytesIO()
     img.save(buffered, format=fmt)
     return base64.b64encode(buffered.getvalue()).decode()
 
+# -----------------------------
+# Load assets
+# -----------------------------
 qr_code = Image.open("qr_code4.jpeg")
 qr_code_str = image_to_base64(qr_code)
 
+# -----------------------------
+# Dynamic time (DST-safe Berlin)
+# -----------------------------
 berlin_tz = ZoneInfo("Europe/Berlin")
 now = datetime.now(berlin_tz)
+
 today = now.strftime("%d.%m.%Y")
 issued_date = (now - timedelta(days=1)).strftime("%d.%m.%Y")
 issue_time = "12:21"
 ticket_time = (now + timedelta(minutes=45)).strftime("%H:%M")
 
+# -----------------------------
+# CSS
+# -----------------------------
 st.markdown("""
 <style>
-#MainMenu, footer, header {visibility: hidden;}
-.stApp {
-    background: #f2f2f2;
-    margin: 0;
-    padding: 0;
-}
-.block-container {
-    max-width: 390px;
-    padding: 0 !important;
-    margin: 0 auto;
-}
-div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
-    margin-top: 0 !important;
+#MainMenu, footer, header {
+    visibility: hidden;
 }
 
+html, body, [data-testid="stAppViewContainer"], .stApp {
+    background: #f1f1f1;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.block-container {
+    padding: 0 !important;
+    margin: 0 auto !important;
+    max-width: 390px !important;
+}
+
+div[data-testid="stVerticalBlock"] {
+    gap: 0 !important;
+}
+
+/* Animations */
 @keyframes vmt-sway {
-    0% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
+    0%   { transform: translateX(-5px); }
+    50%  { transform: translateX(5px); }
     100% { transform: translateX(-5px); }
 }
 
 @keyframes blink-time {
-    0%, 48% { opacity: 1; }
+    0%, 48%   { opacity: 1; }
     50%, 100% { opacity: 0.18; }
 }
 
+/* App shell */
 .mobile-shell {
     width: 100%;
-    background: #f2f2f2;
+    background: #f1f1f1;
     color: #111111;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Top section */
 .top-header {
-    background: #1f2534;
-    color: white;
-    padding: 14px 16px 0 16px;
+    background: #1e2437;
+    color: #ffffff;
+    padding-top: 14px;
 }
 
 .top-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 16px;
+    padding: 0 18px 16px 18px;
+}
+
+.top-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.back-arrow {
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
 }
 
 .top-title {
     font-size: 17px;
     font-weight: 700;
+    line-height: 1;
 }
 
 .top-icons {
-    font-size: 20px;
+    font-size: 24px;
+    line-height: 1;
     letter-spacing: 6px;
     opacity: 0.95;
 }
 
 .tabs {
     display: flex;
-    justify-content: space-around;
-    color: #d9dde6;
+    width: 100%;
+    color: #d6dbe5;
     font-size: 14px;
-    font-weight: 600;
-    position: relative;
+    font-weight: 700;
 }
 
 .tab {
     width: 50%;
     text-align: center;
-    padding: 12px 0 14px 0;
+    padding: 14px 0 16px 0;
     position: relative;
 }
 
@@ -108,22 +145,23 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
     right: 18%;
     bottom: 0;
     height: 4px;
-    background: #ea8f94;
-    border-radius: 2px 2px 0 0;
+    background: #ee9ca2;
+    border-radius: 3px 3px 0 0;
 }
 
+/* Ticket card */
 .ticket-card {
     background: #ffffff;
 }
 
 .ticket-meta {
-    padding: 10px 18px 8px 18px;
     position: relative;
+    padding: 10px 18px 8px 18px;
 }
 
 .ticket-date {
     font-size: 12px;
-    color: #5d5d5d;
+    color: #5e5e5e;
     margin-bottom: 3px;
 }
 
@@ -132,7 +170,7 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
     top: 10px;
     right: 18px;
     font-size: 12px;
-    color: #858585;
+    color: #8a8a8a;
 }
 
 .ticket-name {
@@ -144,16 +182,16 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
 
 .ticket-line {
     font-size: 12px;
-    color: #676767;
+    color: #6b6b6b;
 }
 
 .ticket-time {
     position: absolute;
     right: 18px;
-    bottom: 10px;
+    bottom: 9px;
     font-size: 12px;
     color: #efefef;
-    background: rgba(245,245,245,0.7);
+    background: rgba(245,245,245,0.75);
     padding: 1px 5px;
     border-radius: 4px;
 }
@@ -162,6 +200,7 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
     animation: blink-time 1.0s steps(1, end) infinite;
 }
 
+/* VMT row */
 .vmt-row {
     text-align: center;
     padding-top: 4px;
@@ -171,22 +210,24 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
 .vmt-logo {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: 1px;
+    line-height: 1;
     font-size: 18px;
     font-weight: 900;
     animation: vmt-sway 1.45s ease-in-out infinite;
-    line-height: 1;
 }
 
-.vmt-v { color: #74a932; }
-.vmt-m { color: #005ea8; }
-.vmt-t { color: #d5ad18; }
+.vmt-v { color: #76ab36; }
+.vmt-m { color: #005fab; }
+.vmt-t { color: #d8b11c; }
 
+/* Divider */
 .dark-divider {
-    height: 17px;
-    background: #111827;
+    height: 16px;
+    background: #121827;
 }
 
+/* QR */
 .qr-wrap {
     background: #ffffff;
     text-align: center;
@@ -200,9 +241,10 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
     margin: 0 auto;
 }
 
+/* Content */
 .content {
     background: #ffffff;
-    padding: 0 22px 26px 22px;
+    padding: 0 22px 28px 22px;
     color: #1a1a1a;
 }
 
@@ -210,7 +252,7 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
     font-size: 20px;
     line-height: 1.08;
     margin-top: 4px;
-    margin-bottom: 28px;
+    margin-bottom: 30px;
 }
 
 .route-block {
@@ -222,21 +264,21 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
 
 .copy {
     font-size: 18px;
-    line-height: 1.15;
+    line-height: 1.16;
     margin-bottom: 28px;
 }
 
 .booking {
     font-size: 19px;
-    line-height: 1.1;
-    margin-bottom: 24px;
+    line-height: 1.12;
+    margin-bottom: 26px;
 }
 
+/* Watermark area */
 .watermark-wrap {
     position: relative;
-    margin-top: 10px;
+    border-top: 2px solid #909090;
     padding-top: 16px;
-    border-top: 2px solid #8f8f8f;
     min-height: 250px;
     overflow: hidden;
 }
@@ -247,13 +289,13 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
     left: 8px;
     font-size: 38px;
     font-weight: 800;
-    color: rgba(120,120,120,0.55);
+    color: rgba(120,120,120,0.56);
     letter-spacing: 0.5px;
 }
 
 .watermark-bg {
     position: absolute;
-    top: 52px;
+    top: 54px;
     left: 0;
     right: 0;
     font-size: 17px;
@@ -266,29 +308,30 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
 
 .watermark-name {
     position: absolute;
-    top: 92px;
+    top: 96px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 20px;
     font-weight: 700;
     color: #111111;
-    background: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.42);
     padding: 0 4px;
 }
 
 .watermark-date {
     position: absolute;
-    bottom: 42px;
+    bottom: 40px;
     left: 8px;
     font-size: 27px;
-    color: #2d2d2d;
+    color: #2b2b2b;
     letter-spacing: 1px;
 }
 
+/* Bottom buttons */
 .transport-row {
     display: flex;
-    gap: 16px;
     justify-content: center;
+    gap: 16px;
     margin-top: 18px;
     padding-bottom: 10px;
 }
@@ -305,24 +348,35 @@ div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
     font-weight: 700;
 }
 
-.bus { background: #9634a5; }
-.zug { background: #0f9d58; }
-.tram { background: #ea2d2d; }
+.bus  { background: #9836a8; }
+.zug  { background: #11a34f; }
+.tram { background: #eb2f2f; }
 </style>
 """, unsafe_allow_html=True)
 
+# -----------------------------
+# Watermark repeated text
+# -----------------------------
 watermark_text = (
     "03.06.2026 VMT Gruppentageskarte Ab: 748 Eisenach Hbf 10 Erfurt "
     "über: Gotha Sättelstädt Julie Aasi gültig am: 03:00 Uhr Gesamtpreis: 40,50 "
 ) * 10
 
+# -----------------------------
+# HTML layout
+# -----------------------------
 st.markdown(f"""
 <div class="mobile-shell">
+
     <div class="top-header">
         <div class="top-row">
-            <div class="top-title">← &nbsp;Trip details</div>
+            <div class="top-left">
+                <div class="back-arrow">←</div>
+                <div class="top-title">Trip details</div>
+            </div>
             <div class="top-icons">⌖ ⋮</div>
         </div>
+
         <div class="tabs">
             <div class="tab">Itinerary ❗</div>
             <div class="tab active">Ticket</div>
