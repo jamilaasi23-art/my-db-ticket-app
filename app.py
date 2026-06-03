@@ -5,28 +5,16 @@ from PIL import Image
 import base64
 from io import BytesIO
 
-# -----------------------------
-# Page setup
-# -----------------------------
 st.set_page_config(page_title="Trip details", layout="centered")
 
-# -----------------------------
-# Helpers
-# -----------------------------
 def image_to_base64(img, fmt="JPEG"):
     buffered = BytesIO()
     img.save(buffered, format=fmt)
     return base64.b64encode(buffered.getvalue()).decode()
 
-# -----------------------------
-# Load assets
-# -----------------------------
 qr_code = Image.open("qr_code4.jpeg")
 qr_code_str = image_to_base64(qr_code)
 
-# -----------------------------
-# Dynamic time (DST-safe Berlin)
-# -----------------------------
 berlin_tz = ZoneInfo("Europe/Berlin")
 now = datetime.now(berlin_tz)
 
@@ -35,19 +23,22 @@ issued_date = (now - timedelta(days=1)).strftime("%d.%m.%Y")
 issue_time = "12:21"
 ticket_time = (now + timedelta(minutes=45)).strftime("%H:%M")
 
-# -----------------------------
-# CSS
-# -----------------------------
 st.markdown("""
 <style>
-#MainMenu, footer, header {
-    visibility: hidden;
-}
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
 
-html, body, [data-testid="stAppViewContainer"], .stApp {
+html, body, .stApp, [data-testid="stAppViewContainer"] {
     background: #f1f1f1;
     margin: 0 !important;
     padding: 0 !important;
+}
+
+[data-testid="stMainBlockContainer"] {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    max-width: 390px !important;
 }
 
 .block-container {
@@ -60,7 +51,6 @@ div[data-testid="stVerticalBlock"] {
     gap: 0 !important;
 }
 
-/* Animations */
 @keyframes vmt-sway {
     0%   { transform: translateX(-5px); }
     50%  { transform: translateX(5px); }
@@ -72,26 +62,29 @@ div[data-testid="stVerticalBlock"] {
     50%, 100% { opacity: 0.18; }
 }
 
-/* App shell */
 .mobile-shell {
     width: 100%;
     background: #f1f1f1;
     color: #111111;
     font-family: Arial, Helvetica, sans-serif;
+    overflow: visible;
 }
 
-/* Top section */
 .top-header {
     background: #1e2437;
     color: #ffffff;
-    padding-top: 14px;
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 10;
+    padding-top: 16px;
 }
 
 .top-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 18px 16px 18px;
+    padding: 14px 18px 18px 18px;
 }
 
 .top-left {
@@ -149,7 +142,6 @@ div[data-testid="stVerticalBlock"] {
     border-radius: 3px 3px 0 0;
 }
 
-/* Ticket card */
 .ticket-card {
     background: #ffffff;
 }
@@ -200,7 +192,6 @@ div[data-testid="stVerticalBlock"] {
     animation: blink-time 1.0s steps(1, end) infinite;
 }
 
-/* VMT row */
 .vmt-row {
     text-align: center;
     padding-top: 4px;
@@ -221,13 +212,11 @@ div[data-testid="stVerticalBlock"] {
 .vmt-m { color: #005fab; }
 .vmt-t { color: #d8b11c; }
 
-/* Divider */
 .dark-divider {
     height: 16px;
     background: #121827;
 }
 
-/* QR */
 .qr-wrap {
     background: #ffffff;
     text-align: center;
@@ -241,7 +230,6 @@ div[data-testid="stVerticalBlock"] {
     margin: 0 auto;
 }
 
-/* Content */
 .content {
     background: #ffffff;
     padding: 0 22px 28px 22px;
@@ -274,7 +262,6 @@ div[data-testid="stVerticalBlock"] {
     margin-bottom: 26px;
 }
 
-/* Watermark area */
 .watermark-wrap {
     position: relative;
     border-top: 2px solid #909090;
@@ -327,7 +314,6 @@ div[data-testid="stVerticalBlock"] {
     letter-spacing: 1px;
 }
 
-/* Bottom buttons */
 .transport-row {
     display: flex;
     justify-content: center;
@@ -354,20 +340,13 @@ div[data-testid="stVerticalBlock"] {
 </style>
 """, unsafe_allow_html=True)
 
-# -----------------------------
-# Watermark repeated text
-# -----------------------------
 watermark_text = (
     "03.06.2026 VMT Gruppentageskarte Ab: 748 Eisenach Hbf 10 Erfurt "
     "über: Gotha Sättelstädt Julie Aasi gültig am: 03:00 Uhr Gesamtpreis: 40,50 "
 ) * 10
 
-# -----------------------------
-# HTML layout
-# -----------------------------
 st.markdown(f"""
 <div class="mobile-shell">
-
     <div class="top-header">
         <div class="top-row">
             <div class="top-left">
@@ -418,7 +397,7 @@ st.markdown(f"""
                 zw.: 748 Eisenach<br>
                 und: 10 Erfurt<br>
                 über: Gotha Sättelstädt<br>
-                Preiststufe: 8 CityRegio
+                Preisstufe: 8 CityRegio
             </div>
 
             <div class="copy">
