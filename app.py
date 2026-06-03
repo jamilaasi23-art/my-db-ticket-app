@@ -5,157 +5,404 @@ from PIL import Image
 import base64
 from io import BytesIO
 
-# Page config
-st.set_page_config(page_title="Mein Ticket", layout="centered")
+st.set_page_config(page_title="Trip details", layout="centered")
 
-# Load reliable OCR-B font from CDN
-st.markdown("""
-    <link href="https://cdn.jsdelivr.net/gh/jaycee723/ocr-b@master/ocrb.css" rel="stylesheet">
-""", unsafe_allow_html=True)
-
-# CSS with stronger pull-up and bigger text
-st.markdown("""
-    <style>
-    #MainMenu, footer, header {visibility: hidden;}
-    .stApp {padding-top: 0 !important; margin-top: 0 !important;}
-    .block-container {padding-top: 0 !important;}
-   
-    .fixed-top-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        z-index: 9999;
-        background-color: white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-   
-    .main-content {
-        margin-top: 80px;
-        background-color: white;
-        color: black;
-        padding: 0 5px 5px 5px;
-        line-height: 1.1;
-        font-size: 22px;
-    }
-    .section-header {
-        font-weight: bold;
-        font-size: 22px;
-        margin: 10px 0 4px 0;
-    }
-    .name-line {
-        margin-top: -45px;
-        margin-bottom: -2px;
-        font-size: 22px;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Load images
-top_bar = Image.open("top_bar.jpeg")
-qr_code = Image.open("qr_code4.jpeg")
-bottom_bg = Image.open("bottom_background.jpeg")
-
-# Convert to base64
-def image_to_base64(img):
+def image_to_base64(img, fmt="JPEG"):
     buffered = BytesIO()
-    img.save(buffered, format="JPEG")
+    img.save(buffered, format=fmt)
     return base64.b64encode(buffered.getvalue()).decode()
 
-top_bar_str = image_to_base64(top_bar)
+qr_code = Image.open("qr_code4.jpeg")
 qr_code_str = image_to_base64(qr_code)
-bottom_bg_str = image_to_base64(bottom_bg)
 
-# Dynamic dates with Berlin timezone (DST-safe)
 berlin_tz = ZoneInfo("Europe/Berlin")
 now = datetime.now(berlin_tz)
 today = now.strftime("%d.%m.%Y")
-tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
-future_time = (now + timedelta(minutes=45)).strftime("%H:%M")
-day_month_with_space = now.strftime("%d %m")
+issued_date = (now - timedelta(days=1)).strftime("%d.%m.%Y")
+issue_time = "12:21"
+ticket_time = (now + timedelta(minutes=45)).strftime("%H:%M")
 
-# Fixed top bar
-st.markdown(
-    f'<div class="fixed-top-bar"><img src="data:image/jpeg;base64,{top_bar_str}" style="width:100%; height:auto; display:block;"></div>',
-    unsafe_allow_html=True
-)
-
-# 40px space after top bar
-st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
-
-# QR code as raw HTML
-st.markdown(
-    f'<img src="data:image/jpeg;base64,{qr_code_str}" style="width:100%; height:auto; display:block; margin:0; padding:0; margin-bottom: -30px;">',
-    unsafe_allow_html=True
-)
-
-# Text content
-st.markdown('<div class="main-content">', unsafe_allow_html=True)
-
-st.markdown("<div class='name-line'>Jamil Aasi</div>", unsafe_allow_html=True)
-
-st.markdown("<p class='section-header'>CIV 1080</p>", unsafe_allow_html=True)
-
-st.markdown("<p class='section-header'>Gültigkeit</p>", unsafe_allow_html=True)
-st.markdown(f"""
-IC/EC Fahrkarte (Einfache Fahrt)<br>
-Super Sparpreis<br>
-2. Klasse<br>
-1 Person (27-64 Jahre)<br>
-Von: {today}, 00:00 Uhr<br>
-Bis: {tomorrow}, 10:00 Uhr
-""", unsafe_allow_html=True)
-
-st.markdown("<p class='section-header'>Verbindung</p>", unsafe_allow_html=True)
-st.markdown(f"""
-Eisenach Hbf - Dortmund Hbf<br>
-Zugbindung:<br>
-IC 2156, {future_time} Uhr am {today}<br>
-Via: <1080>(HERS/BEB)KS*WAR(BRI/ALT*PB*HAM)
-""", unsafe_allow_html=True)
-
-st.markdown("<p class='section-header'>Buchungsdetails</p>", unsafe_allow_html=True)
-st.markdown(f"""
-Gebucht am: {today} um 04:35 Uhr<br>
-Auftrags-Nr: 225073878296<br>
-Gesamtpreis: 45,99 €
-""", unsafe_allow_html=True)
-
-st.markdown("<p class='section-header'>Konditionen</p>", unsafe_allow_html=True)
 st.markdown("""
-Zugbindung: Gilt nur für eingetragene Züge.<br>
-Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuzeigen.<br>
-Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.<br>
-Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter [www.bahn.de/agb](https://www.bahn.de/agb) und [www.diebefoerderer.de](https://www.diebefoerderer.de).<br>
-Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.<br>
-Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbindung Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
-Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.<br><br>
-Stornierung ausgeschlossen<br>
-Ticketcode: BNAZCDJ0
+<style>
+#MainMenu, footer, header {visibility: hidden;}
+.stApp {
+    background: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+.block-container {
+    max-width: 390px;
+    padding: 0 !important;
+    margin: 0 auto;
+}
+div[data-testid="stVerticalBlock"] > div:has(.mobile-shell) {
+    margin-top: 0 !important;
+}
+
+@keyframes vmt-sway {
+    0% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+}
+
+@keyframes blink-time {
+    0%, 48% { opacity: 1; }
+    50%, 100% { opacity: 0.18; }
+}
+
+.mobile-shell {
+    width: 100%;
+    background: #f2f2f2;
+    color: #111111;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.top-header {
+    background: #1f2534;
+    color: white;
+    padding: 14px 16px 0 16px;
+}
+
+.top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+}
+
+.top-title {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.top-icons {
+    font-size: 20px;
+    letter-spacing: 6px;
+    opacity: 0.95;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    color: #d9dde6;
+    font-size: 14px;
+    font-weight: 600;
+    position: relative;
+}
+
+.tab {
+    width: 50%;
+    text-align: center;
+    padding: 12px 0 14px 0;
+    position: relative;
+}
+
+.tab.active {
+    color: #ffffff;
+}
+
+.tab.active::after {
+    content: "";
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    bottom: 0;
+    height: 4px;
+    background: #ea8f94;
+    border-radius: 2px 2px 0 0;
+}
+
+.ticket-card {
+    background: #ffffff;
+}
+
+.ticket-meta {
+    padding: 10px 18px 8px 18px;
+    position: relative;
+}
+
+.ticket-date {
+    font-size: 12px;
+    color: #5d5d5d;
+    margin-bottom: 3px;
+}
+
+.ticket-id {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    font-size: 12px;
+    color: #858585;
+}
+
+.ticket-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1c1c1c;
+    margin-bottom: 2px;
+}
+
+.ticket-line {
+    font-size: 12px;
+    color: #676767;
+}
+
+.ticket-time {
+    position: absolute;
+    right: 18px;
+    bottom: 10px;
+    font-size: 12px;
+    color: #efefef;
+    background: rgba(245,245,245,0.7);
+    padding: 1px 5px;
+    border-radius: 4px;
+}
+
+.blinking-time {
+    animation: blink-time 1.0s steps(1, end) infinite;
+}
+
+.vmt-row {
+    text-align: center;
+    padding-top: 4px;
+    padding-bottom: 7px;
+}
+
+.vmt-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 18px;
+    font-weight: 900;
+    animation: vmt-sway 1.45s ease-in-out infinite;
+    line-height: 1;
+}
+
+.vmt-v { color: #74a932; }
+.vmt-m { color: #005ea8; }
+.vmt-t { color: #d5ad18; }
+
+.dark-divider {
+    height: 17px;
+    background: #111827;
+}
+
+.qr-wrap {
+    background: #ffffff;
+    text-align: center;
+    padding: 18px 0 22px 0;
+}
+
+.qr-wrap img {
+    width: 86%;
+    max-width: 318px;
+    display: block;
+    margin: 0 auto;
+}
+
+.content {
+    background: #ffffff;
+    padding: 0 22px 26px 22px;
+    color: #1a1a1a;
+}
+
+.passenger {
+    font-size: 20px;
+    line-height: 1.08;
+    margin-top: 4px;
+    margin-bottom: 28px;
+}
+
+.route-block {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.08;
+    margin-bottom: 34px;
+}
+
+.copy {
+    font-size: 18px;
+    line-height: 1.15;
+    margin-bottom: 28px;
+}
+
+.booking {
+    font-size: 19px;
+    line-height: 1.1;
+    margin-bottom: 24px;
+}
+
+.watermark-wrap {
+    position: relative;
+    margin-top: 10px;
+    padding-top: 16px;
+    border-top: 2px solid #8f8f8f;
+    min-height: 250px;
+    overflow: hidden;
+}
+
+.watermark-big {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    font-size: 38px;
+    font-weight: 800;
+    color: rgba(120,120,120,0.55);
+    letter-spacing: 0.5px;
+}
+
+.watermark-bg {
+    position: absolute;
+    top: 52px;
+    left: 0;
+    right: 0;
+    font-size: 17px;
+    line-height: 1.02;
+    font-weight: 700;
+    color: rgba(140,140,140,0.28);
+    transform: rotate(-4deg);
+    white-space: pre-line;
+}
+
+.watermark-name {
+    position: absolute;
+    top: 92px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    font-weight: 700;
+    color: #111111;
+    background: rgba(255,255,255,0.4);
+    padding: 0 4px;
+}
+
+.watermark-date {
+    position: absolute;
+    bottom: 42px;
+    left: 8px;
+    font-size: 27px;
+    color: #2d2d2d;
+    letter-spacing: 1px;
+}
+
+.transport-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 18px;
+    padding-bottom: 10px;
+}
+
+.transport-pill {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.bus { background: #9634a5; }
+.zug { background: #0f9d58; }
+.tram { background: #ea2d2d; }
+</style>
 """, unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)
+watermark_text = (
+    "03.06.2026 VMT Gruppentageskarte Ab: 748 Eisenach Hbf 10 Erfurt "
+    "über: Gotha Sättelstädt Julie Aasi gültig am: 03:00 Uhr Gesamtpreis: 40,50 "
+) * 10
 
-# Bottom background as raw HTML — full width
-st.markdown(
-    f'<img src="data:image/jpeg;base64,{bottom_bg_str}" style="width:100vw; height:auto; display:block; margin:0; padding:0;">',
-    unsafe_allow_html=True
-)
-
-# Bottom date — OCR-B font from reliable CDN
 st.markdown(f"""
-    <div style="position: relative; margin-top: -280px; text-align: left; padding-left: 20px; pointer-events: none;">
-        <div style="
-            font-size: 34px;
-            font-weight: 900;
-            font-family: 'OCR B', monospace;
-            color: #444444;
-            -webkit-text-stroke: 3px #bbbbbb;
-            text-stroke: 3px #bbbbbb;
-            paint-order: stroke fill;
-        ">
-            {day_month_with_space}
+<div class="mobile-shell">
+    <div class="top-header">
+        <div class="top-row">
+            <div class="top-title">← &nbsp;Trip details</div>
+            <div class="top-icons">⌖ ⋮</div>
+        </div>
+        <div class="tabs">
+            <div class="tab">Itinerary ❗</div>
+            <div class="tab active">Ticket</div>
         </div>
     </div>
+
+    <div class="ticket-card">
+        <div class="ticket-meta">
+            <div class="ticket-date">{today}</div>
+            <div class="ticket-id">181258037062</div>
+            <div class="ticket-name">VMT Gruppentageskarte</div>
+            <div class="ticket-line">Ab 748 Eisenach, Preisstufe 8 CityRegio</div>
+            <div class="ticket-time blinking-time">{ticket_time}</div>
+        </div>
+
+        <div class="vmt-row">
+            <div class="vmt-logo">
+                <span class="vmt-v">V</span><span class="vmt-m">M</span><span class="vmt-t">T</span>
+            </div>
+        </div>
+
+        <div class="dark-divider"></div>
+
+        <div class="qr-wrap">
+            <img src="data:image/jpeg;base64,{qr_code_str}">
+        </div>
+
+        <div class="content">
+            <div class="passenger">
+                Julie Aasi<br>
+                Ausweis: Amtlicher<br>
+                Lichtbildausweis
+            </div>
+
+            <div class="route-block">
+                Gruppentageskarte<br>
+                gültig am: {today}<br>
+                bis 03:00 Uhr des Folgetages<br>
+                zw.: 748 Eisenach<br>
+                und: 10 Erfurt<br>
+                über: Gotha Sättelstädt<br>
+                Preiststufe: 8 CityRegio
+            </div>
+
+            <div class="copy">
+                Gültig für beliebig viele Fahrten für max. 5 Personen in den gelösten Tarifzonen
+                (Start-, Ziel- und Wegzonen), bis zum Folgetag 3 Uhr, Mitnahme von Kindern bis
+                Einschulung frei. Statt 1 Person kann 1 Fahrrad oder ein Hund mitgenommen werden.
+            </div>
+
+            <div class="copy">
+                Es gelten die Beförderungs- und Tarifbestimmungen der im Verkehrsverbund
+                Mittelthüringen (VMT) zusammenwirkenden Verkehrsunternehmen.
+            </div>
+
+            <div class="copy">
+                Ausgegeben durch die DB Fernverkehr AG im Auftrag der DB Vertrieb GmbH.
+            </div>
+
+            <div class="booking">
+                Auftrags-Nr: 181258037062<br>
+                Ticketcode: N0DQFL3B<br>
+                Gesamtpreis: 40,50 EUR<br>
+                Ausgestellt am {issued_date} um<br>
+                {issue_time} Uhr
+            </div>
+
+            <div class="watermark-wrap">
+                <div class="watermark-big">181258037062</div>
+                <div class="watermark-bg">{watermark_text}</div>
+                <div class="watermark-name">Julie Aasi</div>
+                <div class="watermark-date">03 06</div>
+            </div>
+
+            <div class="transport-row">
+                <div class="transport-pill bus">BUS</div>
+                <div class="transport-pill zug">Zug</div>
+                <div class="transport-pill tram">Tram</div>
+            </div>
+        </div>
+    </div>
+</div>
 """, unsafe_allow_html=True)
