@@ -13,23 +13,13 @@ st.markdown("""
     <link href="https://cdn.jsdelivr.net/gh/jaycee723/ocr-b@master/ocrb.css" rel="stylesheet">
 """, unsafe_allow_html=True)
 
-# CSS
+# CSS with stronger pull-up and bigger text
 st.markdown("""
     <style>
     #MainMenu, footer, header {visibility: hidden;}
-    .stApp {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-        background-color: white;
-    }
-    .block-container {
-        padding-top: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-bottom: 0 !important;
-        max-width: 100% !important;
-    }
-
+    .stApp {padding-top: 0 !important; margin-top: 0 !important;}
+    .block-container {padding-top: 0 !important;}
+   
     .fixed-top-bar {
         position: fixed;
         top: 0;
@@ -38,55 +28,26 @@ st.markdown("""
         width: 100%;
         z-index: 9999;
         background-color: white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-
-    .fixed-top-bar img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    .top-spacer {
-        height: 118px;
-        background-color: white;
-    }
-
+   
     .main-content {
+        margin-top: 80px;
         background-color: white;
         color: black;
         padding: 0 5px 5px 5px;
         line-height: 1.1;
         font-size: 22px;
     }
-
     .section-header {
         font-weight: bold;
         font-size: 22px;
         margin: 10px 0 4px 0;
     }
-
     .name-line {
         margin-top: -45px;
         margin-bottom: -2px;
         font-size: 22px;
-    }
-
-    .qr-image {
-        width: 100%;
-        height: auto;
-        display: block;
-        margin: 0;
-        padding: 0;
-        margin-bottom: -30px;
-    }
-
-    .bottom-bg {
-        width: 100vw;
-        height: auto;
-        display: block;
-        margin: 0;
-        padding: 0;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -114,22 +75,18 @@ tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
 future_time = (now + timedelta(minutes=45)).strftime("%H:%M")
 day_month_with_space = now.strftime("%d %m")
 
-# Fixed top bar - original working style
+# Fixed top bar
 st.markdown(
-    f'''
-    <div class="fixed-top-bar">
-        <img src="data:image/jpeg;base64,{top_bar_str}">
-    </div>
-    ''',
+    f'<div class="fixed-top-bar"><img src="data:image/jpeg;base64,{top_bar_str}" style="width:100%; height:auto; display:block;"></div>',
     unsafe_allow_html=True
 )
 
-# Spacer below fixed top bar so content does not hide behind it
-st.markdown('<div class="top-spacer"></div>', unsafe_allow_html=True)
+# 40px space after top bar
+st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
 
 # QR code as raw HTML
 st.markdown(
-    f'<img src="data:image/jpeg;base64,{qr_code_str}" class="qr-image">',
+    f'<img src="data:image/jpeg;base64,{qr_code_str}" style="width:100%; height:auto; display:block; margin:0; padding:0; margin-bottom: -30px;">',
     unsafe_allow_html=True
 )
 
@@ -155,7 +112,7 @@ st.markdown(f"""
 Eisenach Hbf - Dortmund Hbf<br>
 Zugbindung:<br>
 IC 2156, {future_time} Uhr am {today}<br>
-Via: &lt;1080&gt;(HERS/BEB)KS*WAR(BRI/ALT*PB*HAM)
+Via: <1080>(HERS/BEB)KS*WAR(BRI/ALT*PB*HAM)
 """, unsafe_allow_html=True)
 
 st.markdown("<p class='section-header'>Buchungsdetails</p>", unsafe_allow_html=True)
@@ -170,7 +127,7 @@ st.markdown("""
 Zugbindung: Gilt nur für eingetragene Züge.<br>
 Nur gültig mit amtlichem Lichtbildausweis. Dieser ist bei der Kontrolle vorzuzeigen.<br>
 Bei Fahrkarten mit BahnCard-Rabatt zeigen Sie bitte zusätzlich Ihre gültige BahnCard vor.<br>
-Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter www.bahn.de/agb und www.diebefoerderer.de.<br>
+Es gelten die nationalen und internationalen Beförderungsbedingungen der DB AG. Innerhalb von Verkehrsverbünden und Tarifgemeinschaften gelten deren Bestimmungen. Alle Bedingungen finden Sie unter [www.bahn.de/agb](https://www.bahn.de/agb) und [www.diebefoerderer.de](https://www.diebefoerderer.de).<br>
 Eine Fahrkarte entspricht grundsätzlich einem Beförderungsvertrag, mehrere Fahrkarten mehreren Beförderungsverträgen. Vertraglicher Beförderer können dabei ein oder mehrere Verkehrsunternehmen sein. Für die Eisenbahnfahrt handelt es sich bei dieser Fahrkarte um eine Durchgangsfahrkarte gemäß der Fahrgastrechte-Verordnung (EU) 2021/782 für den Eisenbahnverkehr. Für eine Fahrkarte, die neben der Eisenbahnfahrt noch die Fahrt mit einem anderen Verkehrsträger umfasst (z.B. Schiff zu den Nordseeinseln; ÖPNV) gilt: Die Fahrkarte dokumentiert dann je einen gesonderten Beförderungsvertrag pro Richtung und pro Verkehrsträger. Die Haftung für fahrgastrechtliche Ansprüche gilt dann auch nur für den jeweiligen Beförderungsvertrag.<br>
 Bei einer zu erwartenden Verspätung ab 20 Minuten am Zielbahnhof Ihrer Fahrkarte ist die Zugbindung Ihrer Fahrt ohne besondere Bescheinigung aufgehoben.<br>
 Kleinkindabteile, Rollstuhlstellplätze und Vorrangplätze für Personen mit eingeschränkter Mobilität sowie Plätze für Reisende mit BahnBonus Gold- oder Platinstatus sind bei Bedarf für diese Personengruppen freizugeben.<br><br>
@@ -182,7 +139,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 # Bottom background as raw HTML — full width
 st.markdown(
-    f'<img src="data:image/jpeg;base64,{bottom_bg_str}" class="bottom-bg">',
+    f'<img src="data:image/jpeg;base64,{bottom_bg_str}" style="width:100vw; height:auto; display:block; margin:0; padding:0;">',
     unsafe_allow_html=True
 )
 
