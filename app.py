@@ -96,13 +96,12 @@ st.markdown("""
 qr_code = Image.open("qr_code4.jpeg")
 bottom_bg = Image.open("bottom_background.jpeg")
 vmt_logo = Image.open("vmt.png")
-
 # Convert to base64
 def image_to_base64(img):
     buffered = BytesIO()
-    img.save(buffered, format="JPEG")
+    img.save(buffered, format="PNG")
     return base64.b64encode(buffered.getvalue()).decode()
-
+    
 qr_code_str = image_to_base64(qr_code)
 bottom_bg_str = image_to_base64(bottom_bg)
 vmt_str = image_to_base64(vmt_logo)
@@ -123,10 +122,10 @@ f"""
         02<span class="blink-colon">:</span>00
     </div>
 
-    <img
-        src="data:image/jpeg;base64,{vmt_str}"
-        class="vmt-logo"
-    >
+ <img
+    src="data:image/png;base64,{vmt_str}"
+    class="vmt-logo"
+>
 
 </div>
 """,
