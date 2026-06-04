@@ -19,17 +19,57 @@ st.markdown("""
     #MainMenu, footer, header {visibility: hidden;}
     .stApp {padding-top: 0 !important; margin-top: 0 !important;}
     .block-container {padding-top: 0 !important;}
-   
-    .fixed-top-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        z-index: 9999;
-        background-color: white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+   .fixed-top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 70px;
+
+    background: white;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 15px;
+
+    z-index: 9999;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.clock-box {
+    font-size: 26px;
+    font-weight: 600;
+    color: black;
+}
+
+.blink-colon {
+    animation: blinkColon 1s infinite;
+}
+
+@keyframes blinkColon {
+    50% {
+        opacity: 0;
     }
+}
+
+.vmt-logo {
+    height: 28px;
+    animation: moveVMT 2s ease-in-out infinite alternate;
+}
+
+@keyframes moveVMT {
+    from {
+        transform: translateX(-4px);
+    }
+
+    to {
+        transform: translateX(4px);
+    }
+}
    
     .main-content {
         margin-top: 80px;
@@ -53,9 +93,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load images
-top_bar = Image.open("top_bar.jpeg")
 qr_code = Image.open("qr_code4.jpeg")
 bottom_bg = Image.open("bottom_background.jpeg")
+vmt_logo = Image.open("vmt.png")
 
 # Convert to base64
 def image_to_base64(img):
@@ -63,9 +103,9 @@ def image_to_base64(img):
     img.save(buffered, format="JPEG")
     return base64.b64encode(buffered.getvalue()).decode()
 
-top_bar_str = image_to_base64(top_bar)
 qr_code_str = image_to_base64(qr_code)
 bottom_bg_str = image_to_base64(bottom_bg)
+vmt_str = image_to_base64(vmt_logo)
 
 # Dynamic dates with Berlin timezone (DST-safe)
 berlin_tz = ZoneInfo("Europe/Berlin")
@@ -75,15 +115,29 @@ tomorrow = (now + timedelta(days=1)).strftime("%d.%m.%Y")
 future_time = (now + timedelta(minutes=45)).strftime("%H:%M")
 day_month_with_space = now.strftime("%d %m")
 
-# Fixed top bar
 st.markdown(
-    f'<div class="fixed-top-bar"><img src="data:image/jpeg;base64,{top_bar_str}" style="width:100%; height:auto; display:block;"></div>',
-    unsafe_allow_html=True
+f"""
+<div class="fixed-top-bar">
+
+    <div class="clock-box">
+        02<span class="blink-colon">:</span>00
+    </div>
+
+    <img
+        src="data:image/jpeg;base64,{vmt_str}"
+        class="vmt-logo"
+    >
+
+</div>
+""",
+unsafe_allow_html=True
+)# 40px space after top bar
+st.markdown(
+"""
+<div style="height:80px;"></div>
+""",
+unsafe_allow_html=True
 )
-
-# 40px space after top bar
-st.markdown("<div style='height: 40px; background-color: white;'></div>", unsafe_allow_html=True)
-
 # QR code as raw HTML
 st.markdown(
     f'<img src="data:image/jpeg;base64,{qr_code_str}" style="width:100%; height:auto; display:block; margin:0; padding:0; margin-bottom: -30px;">',
